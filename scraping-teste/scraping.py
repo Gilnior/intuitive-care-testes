@@ -44,7 +44,7 @@ def main():
     with open(f'{pdfname}', 'wb') as f:
         f.write(r.content)
     f.close
-    print(f"{pdfname} was sucessfully downloaded")
+    print(f"\n{pdfname} was sucessfully downloaded")
 
 
 if __name__=='__main__':
