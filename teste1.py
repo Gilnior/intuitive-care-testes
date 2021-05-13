@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import os
 
 
 def getpdfpagelink(debug=False):  # get the link to the page where the PDF is in
@@ -41,12 +42,15 @@ def downloadPDF(name=False):
     r = requests.get(pdf_link, stream=True)
 
     pdfname = pdf_link.split('/')[-1]
+    if pdfname not in os.listdir():
+        with open(f'{pdfname}', 'wb') as f:
+            f.write(r.content)
+        f.close
+        print(f"\n{pdfname} was sucessfully downloaded\n")
 
-    with open(f'{pdfname}', 'wb') as f:
-        f.write(r.content)
-    f.close
-    print(f"\n{pdfname} was sucessfully downloaded\n")
-
+    else:
+        print(f'\n\nthere is a {pdfname} already\n\n')
+        
     if name:
         return pdfname
 
