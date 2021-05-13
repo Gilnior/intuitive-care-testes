@@ -3,9 +3,14 @@ from teste1 import downloadPDF
 import pandas as pd
 import zipfile, os, shutil
 
+"""
+- Extrair do pdf anexo os dados dos Quadros 30,31,32 (Tabela de categoria do Padrão TISS);
+- Salvar dados dessas tabelas em csvs;
+- Zipar todos os csvs num arquivo "Teste_Intuitive_Care_{seu_nome}.zip"
+"""
 
 def gettables():
-    pdf = downloadPDF(name=True)
+    pdf = downloadPDF(name=True, notify=False)
 
     tables = camelot.read_pdf(pdf, pages='79,80,81,82,83,84,85')
     
@@ -31,13 +36,15 @@ def tocsv(dfs = getdataframes()):
 
 
 def zipping():
-    zippando = zipfile.ZipFile("Teste_Intuitive_Care_Gilmar_Junio_Macedo_Guedes.zip", 'w')
+    zipname = 'Teste_Intuitive_Care_Gilmar_Junio_Macedo_Guedes.zip'
+    if zipname not in os.listdir():
+        zippando = zipfile.ZipFile(zipname, 'w')
 
-    for f in os.listdir():
-        if f.endswith('.csv'):
-            zippando.write(f, compress_type=zipfile.ZIP_DEFLATED)
-    
-    zippando.close()
+        for f in os.listdir():
+            if f.endswith('.csv'):
+                zippando.write(f, compress_type=zipfile.ZIP_DEFLATED)
+        
+        zippando.close()
 
 
 def deletecsvs():
@@ -54,4 +61,4 @@ def main(delet=False):
 
 
 if __name__=='__main__':
-    main(delet=True)
+    main(delet=True)  # delet is True because the folder is cleaner this way

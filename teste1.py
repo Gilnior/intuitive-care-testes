@@ -2,6 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
+""" 
+1.1 - Acessar o site: http://www.ans.gov.br/prestadores/tiss-troca-de-informacao-de-saude-suplementar;
+1.2 - Buscar a versão mais recente do Padrão TISS (arquivo - padrao_tiss_componente_organizacional_201902.pdf);
+1.3 - Baixar o componente organizacional;
+"""
+
 
 def getpdfpagelink(debug=False):  # get the link to the page where the PDF is in
     link = 'http://www.ans.gov.br/prestadores/tiss-troca-de-informacao-de-saude-suplementar'
@@ -37,7 +43,7 @@ def mountlink(ahref,link):
     return Link
 
 
-def downloadPDF(name=False):
+def downloadPDF(name=False,notify=True):
     pdf_link = getpdflink()
     r = requests.get(pdf_link, stream=True)
 
@@ -46,11 +52,11 @@ def downloadPDF(name=False):
         with open(f'{pdfname}', 'wb') as f:
             f.write(r.content)
         f.close
-        print(f"\n{pdfname} was sucessfully downloaded\n")
+        if notify: print(f"\n{pdfname} was sucessfully downloaded\n")
 
     else:
-        print(f'\n\nthere is a {pdfname} already\n\n')
-        
+        if notify: print(f'\nthere is a {pdfname} already\n')
+
     if name:
         return pdfname
 
