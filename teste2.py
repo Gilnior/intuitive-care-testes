@@ -27,7 +27,9 @@ def getdataframes(ts=gettables()):
 
     df32 = ts[7].df
 
-    return [df30,df31,df32]
+    lista = [df30,df31,df32]
+
+    return lista
 
 
 def tocsv(dfs = getdataframes()):
@@ -53,7 +55,7 @@ def deletecsvs():
             os.remove(f)
 
 
-def main(delet=False):
+def main(delet=True):
     tocsv()
     zipping()
 
@@ -61,4 +63,4 @@ def main(delet=False):
 
 
 if __name__=='__main__':
-    main(delet=True)  # delet is True because the folder is cleaner this way
+    main()  # delet is True by default because the folder is cleaner this way
